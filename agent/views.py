@@ -1,3 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import Agent
+from .forms import AgentForm
 
-# Create your views here.
+def agent_list(request):
+    agent = Agent.objects.prefetch_related('venues', 'building')
+    return render(request, 'agent/agent_list.html', {'agent': agent})
+
+def add_agent(request):
+    if request.method == 'POST':
+        form = AgentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('agent_list')
+    else:
+        form = AgentForm()
+    return render(request, 'agent/agent_form.html', {'form': form})

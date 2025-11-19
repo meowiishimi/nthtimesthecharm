@@ -27,10 +27,10 @@ class Venue(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    type = models.CharField(max_length=20, choices=VENUE_TYPES)
-    floor = models.PositiveIntegerField()
-    capacity = models.PositiveIntegerField()
     floor_area = models.DecimalField(max_digits=8, decimal_places=2)
+    type = models.CharField(max_length=20, choices=VENUE_TYPES)
+    capacity = models.PositiveIntegerField()
+    floor = models.PositiveIntegerField()
     under_renovation = models.BooleanField(default=False)
 
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='venues')

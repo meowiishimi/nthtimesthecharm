@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Agents</title></head>
+<body>
+    <h1>Agents</h1>
+    <a href="{% url 'add_agent' %}">Add New Agent</a>
+    <hr>
+    {% for agent in agents %}
+        <h2>{{ agent.first_name }} {{ agent.last_name }} — {{ agent.building.name }}</h2>
+        <ul>
+            {% for venue in agent.venues.all %}
+                <li>
+                    {{ venue.name }} ({{ venue.type }})
+                    {% if venue.under_renovation %}
+                        <strong style="color:red;">[Under Renovation]</strong>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No venues assigned yet.</li>
+            {% endfor %}
+        </ul>
+        <hr>
+    {% endfor %}
+</body>
+</html>

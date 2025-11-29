@@ -3,8 +3,8 @@ from .models import Agent
 from .forms import AgentForm
 
 def agent_list(request):
-    agent = Agent.objects.prefetch_related('venues', 'building')
-    return render(request, 'agent/agent_list.html', {'agent': agent})
+    agent = Agent.objects.select_related('building').prefetch_related('venues')
+    return render(request, 'agent/agent_list.html', {'agents': agent})
 
 def add_agent(request):
     if request.method == 'POST':

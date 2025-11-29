@@ -2,17 +2,17 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 class Building(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.name} ({self.city})"
 
 
 class Agent(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='agent')
 
     def __str__(self):
@@ -26,11 +26,11 @@ class Venue(models.Model):
         ('Studio', 'Studio'),
     ]
 
-    name = models.CharField(max_length=100)
-    floor_area = models.DecimalField(max_digits=8, decimal_places=2)
-    type = models.CharField(max_length=20, choices=VENUE_TYPES)
+    name = models.CharField(max_length=255)
+    floor_area = models.PositiveIntegerField()
+    type = models.CharField(max_length=255, choices=VENUE_TYPES)
     capacity = models.PositiveIntegerField()
-    floor = models.PositiveIntegerField()
+    floor = models.CharField(max_length=10)
     under_renovation = models.BooleanField(default=False)
 
     building = models.ForeignKey(Building, on_delete=models.CASCADE, related_name='venues')

@@ -1,25 +1,143 @@
 <!DOCTYPE html>
 <html>
-<head><title>Agents</title></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        h1::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 65%;
+            height: 5px;
+            background: #4CAF50;
+            border-radius: 3px;
+        }
+        h2 {
+            margin: 0px;
+            font-size: 30px;
+        }
+        h3 {
+            margin: 0px;
+            font-size: 20px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 30px;
+            margin-bottom: 20px;
+        }
+        .agent-entry {
+            width: 60%;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 30px auto;
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .agent-entry ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .agent-entry li {
+            margin: 6px 0;
+            padding: 8px 0;
+            border-top: 1px solid #dedede;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
 <body>
-    <h1>Agents</h1>
-    <a href="{% url 'add_agent' %}">Add New Agent</a>
+    <div class="header-bar">
+        <h1>Agents List</h1>
+        <a href="{% url 'add_agent' %}">Add New Agent</a>
+    </div>
     <hr>
     {% for agent in agents %}
-        <h2>{{ agent.first_name }} {{ agent.last_name }} — {{ agent.building.name }}</h2>
+    <div class="agent-entry">
+        <h2>{{ agent.first_name }} {{ agent.last_name }}</h2>
+        <hr>
+        <h3>{{ agent.building.name }}</h3>
         <ul>
             {% for venue in agent.venues.all %}
                 <li>
                     {{ venue.name }} ({{ venue.type }})
                     {% if venue.under_renovation %}
-                        <strong style="color:red;">[Under Renovation]</strong>
+                        <br><strong style="color:red;">| UNDER RENOVATION |</strong>
                     {% endif %}
                 </li>
             {% empty %}
-                <li>No venues assigned yet.</li>
+                <li><br>No venues assigned yet.</li>
             {% endfor %}
         </ul>
-        <hr>
+    </div>
+    <hr>
     {% endfor %}
 </body>
 </html>
